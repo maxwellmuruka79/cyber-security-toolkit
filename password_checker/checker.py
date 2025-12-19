@@ -1,9 +1,8 @@
 import re
 
-def check_password_strength(password):
+def check_password_strength(password):  # <--- Make sure this name is exact
     strength = 0
     
-    # Criteria checks
     if len(password) >= 8: strength += 1
     if re.search("[a-z]", password): strength += 1
     if re.search("[A-Z]", password): strength += 1
@@ -19,8 +18,3 @@ def check_password_strength(password):
     }
 
     return remarks.get(strength, "Extremely Weak"), strength
-
-if __name__ == "__main__":
-    pwd = input("Check password: ")
-    res, score = check_password_strength(pwd)
-    print(f"Strength: {res} ({score}/5)")
