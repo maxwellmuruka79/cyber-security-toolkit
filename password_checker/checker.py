@@ -1,13 +1,22 @@
 import re
 
-def check_password_strength(password):  # <--- Make sure this name is exact
+def check_password_strength(password):
     strength = 0
-    
-    if len(password) >= 8: strength += 1
-    if re.search("[a-z]", password): strength += 1
-    if re.search("[A-Z]", password): strength += 1
-    if re.search("[0-9]", password): strength += 1
-    if re.search("[!@#$%^&*(),.?\":{}|<>]", password): strength += 1
+
+    if len(password) >= 8:
+        strength += 1
+
+    if re.search("[a-z]", password):
+        strength += 1
+
+    if re.search("[A-Z]", password):
+        strength += 1
+
+    if re.search("[0-9]", password):
+        strength += 1
+
+    if re.search("[!@#$%^&*(),.?\":{}|<>]", password):
+        strength += 1
 
     remarks = {
         1: "Very Weak",
@@ -18,3 +27,12 @@ def check_password_strength(password):  # <--- Make sure this name is exact
     }
 
     return remarks.get(strength, "Extremely Weak"), strength
+
+
+password = input("Enter password: ")
+
+result, score = check_password_strength(password)
+
+print("Password Strength:", result)
+print("Score:", score)
+
