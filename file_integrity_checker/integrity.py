@@ -2,21 +2,28 @@ import hashlib
 import os
 
 def get_file_hash(filepath):
-    # Standard SHA-256 hashing algorithm
     sha256_hash = hashlib.sha256()
-    
+
     if not os.path.exists(filepath):
         return None
 
-    try:
-        with open(filepath, "rb") as f:
-            # Read the file in chunks so it doesn't crash if the file is huge
-            for byte_block in iter(lambda: f.read(4096), b""):
-                sha256_hash.update(byte_block)
-        return sha256_hash.hexdigest()
-    except Exception as e:
-        return f"Error: {str(e)}"
+    with open(filepath, "rb") as f:
+        for byte_block in iter(lambda: f.read(4096), b""):
+            sha256_hash.update(byte_block)
 
-if __name__ == "__main__":
-    path = input("Enter file path: ")
-    print(f"Hash: {get_file_hash(path)}")
+    return sha256_hash.hexdigest()
+
+
+original_hash = input("Enter original hash: ")
+path = input("Enter file path: ")
+
+current_hash = get_file_hash(path)
+
+if current_hash is None:
+    print("File not found.")
+
+elif current_hash == original_hash:
+    print("File integrity verified.")
+
+else:
+    print("WARNING: File has been modified!")
